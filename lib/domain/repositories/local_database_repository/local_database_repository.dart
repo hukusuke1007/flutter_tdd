@@ -1,4 +1,4 @@
-import '../../infrastructures/local_database/index.dart';
+import '../../../infrastructures/local_database/index.dart';
 import 'local_database_key.dart';
 
 abstract class LocalDatabaseRepository {
