@@ -14,23 +14,37 @@ Future<void> main() async {
     final impl = GithubRepositoryImpl(GithubClient.create(chopperClient()));
     test('[成功] ユーザー情報を取得する', () async {
       final result = await impl.fetchUsers();
-      expect(true, result.isNotEmpty);
+      expect(result.isNotEmpty, true);
     });
   });
 
   group('モックを使ったテスト', () {
-    // 参考: https://hadrien-lejard.gitbook.io/chopper/faq#mock-chopperclient-for-testing
-    final mock = MockClient((request) async {
-      final result = mockUsersData[request.url.path] as List<dynamic>;
-      if (result == null) {
-        return http.Response(json.encode({'error': 'not found'}), 404);
-      }
-      return http.Response(json.encode(result), 200);
-    });
-    final impl = GithubRepositoryImpl(GithubClient.create(chopperClient(mock)));
     test('[成功] ユーザー情報を取得する', () async {
+      // 参考: https://hadrien-lejard.gitbook.io/chopper/faq#mock-chopperclient-for-testing
+      final mock = MockClient((request) async {
+        final result = mockUsersData[request.url.path] as List<dynamic>;
+        if (result == null) {
+          return http.Response(json.encode({'error': 'not found'}), 404);
+        }
+        return http.Response(json.encode(result), 200);
+      });
+      final impl =
+          GithubRepositoryImpl(GithubClient.create(chopperClient(mock)));
       final result = await impl.fetchUsers();
-      expect(true, result.isNotEmpty);
+      expect(result.isNotEmpty, true);
+    });
+    test('[失敗] ユーザー情報を取得する', () async {
+      final mock = MockClient((request) async {
+        return http.Response(json.encode({'error': 'server error'}), 400);
+      });
+      try {
+        final impl =
+            GithubRepositoryImpl(GithubClient.create(chopperClient(mock)));
+        await impl.fetchUsers();
+        fail('failed test');
+      } on Exception catch (e) {
+        expect(e, isNotNull);
+      }
     });
   });
 }
