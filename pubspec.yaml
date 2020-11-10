@@ -24,6 +24,11 @@ dependencies:
   # Database
   shared_preferences:
 
+  # Firebase
+  flamingo:
+  firebase_auth:
+  cloud_functions:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
