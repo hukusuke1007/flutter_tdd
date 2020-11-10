@@ -1,4 +1,4 @@
-import 'package:flutter_tdd/domain/repositories/firebase_auth/firebase_auth_repository.dart';
+import 'package:flutter_tdd/domain/repositories/firebase_auth_repository/firebase_auth_repository.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 import 'package:test/test.dart';
 
