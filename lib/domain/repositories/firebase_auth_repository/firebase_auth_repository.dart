@@ -14,11 +14,6 @@ abstract class FirebaseAuthRepository {
   bool get isAnonymously;
   bool get isEmailVerification;
   Future<String> get idToken;
-  Future<UserCredential> signInWithAnonymously();
-  Future<UserCredential> signInWithEmail(String email, String password);
-  Future<UserCredential> signInWithGoogle();
-  Future<UserCredential> signInWithApple();
-  Future<UserCredential> signIn(AuthCredential authCredential);
   Future<UserCredential> signUpWithEmail(String email, String password);
   Future<UserCredential> signUpWithCredential(AuthCredential authCredential);
   Future<void> verifyPhoneNumber(
@@ -31,6 +26,11 @@ abstract class FirebaseAuthRepository {
     PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout,
   });
   Future<void> updatePhoneNumber(PhoneAuthCredential authCredential);
+  Future<UserCredential> signInWithAnonymously();
+  Future<UserCredential> signInWithEmail(String email, String password);
+  Future<UserCredential> signInWithGoogle();
+  Future<UserCredential> signInWithApple();
+  Future<UserCredential> signIn(AuthCredential authCredential);
   Future<void> sendEmailVerification();
   Future<void> resetPasswordEmail(String email, String password);
   Future<bool> isPasswordVerified(String email, String password);
@@ -69,38 +69,6 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   Future<String> get idToken => _auth.currentUser?.getIdToken(true);
 
   @override
-  Future<UserCredential> signInWithAnonymously() => _auth.signInAnonymously();
-
-  @override
-  Future<UserCredential> signInWithEmail(String email, String password) =>
-      _auth.signInWithEmailAndPassword(email: email, password: password);
-
-  @override
-  Future<UserCredential> signInWithGoogle() async {
-    final signInResult = await getCredentialWithGoogle();
-    if (signInResult == null) {
-      return null;
-    }
-    return _auth.signInWithCredential(signInResult.credential);
-  }
-
-  @override
-  Future<UserCredential> signInWithApple() async {
-    if (Platform.isAndroid) {
-      return null;
-    }
-    final signInResult = await getCredentialWithApple();
-    if (signInResult == null) {
-      return null;
-    }
-    return _auth.signInWithCredential(signInResult.credential);
-  }
-
-  @override
-  Future<UserCredential> signIn(AuthCredential authCredential) =>
-      _auth.signInWithCredential(authCredential);
-
-  @override
   Future<UserCredential> signUpWithEmail(String email, String password) =>
       _auth.createUserWithEmailAndPassword(email: email, password: password);
 
@@ -133,6 +101,38 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   @override
   Future<void> updatePhoneNumber(PhoneAuthCredential authCredential) =>
       _auth.currentUser.updatePhoneNumber(authCredential);
+
+  @override
+  Future<UserCredential> signInWithAnonymously() => _auth.signInAnonymously();
+
+  @override
+  Future<UserCredential> signInWithEmail(String email, String password) =>
+      _auth.signInWithEmailAndPassword(email: email, password: password);
+
+  @override
+  Future<UserCredential> signInWithGoogle() async {
+    final signInResult = await getCredentialWithGoogle();
+    if (signInResult == null) {
+      return null;
+    }
+    return _auth.signInWithCredential(signInResult.credential);
+  }
+
+  @override
+  Future<UserCredential> signInWithApple() async {
+    if (Platform.isAndroid) {
+      return null;
+    }
+    final signInResult = await getCredentialWithApple();
+    if (signInResult == null) {
+      return null;
+    }
+    return _auth.signInWithCredential(signInResult.credential);
+  }
+
+  @override
+  Future<UserCredential> signIn(AuthCredential authCredential) =>
+      _auth.signInWithCredential(authCredential);
 
   @override
   Future<void> sendEmailVerification() =>
