@@ -6,12 +6,7 @@ import 'package:test/test.dart';
 Future<void> main() async {
   group('GithubRepository Test', () {
     group('ネットワークと疎通したテスト', () {
-      final impl = GithubRepositoryImpl(
-        GithubClient.create(
-          GithubClientCreator.create(),
-        ),
-      );
-
+      final impl = GithubRepositoryImpl(GithubClient.create(chopperClient));
       test('[成功] ユーザー情報を取得する', () async {
         {
           final result = await impl.fetchUsers();
