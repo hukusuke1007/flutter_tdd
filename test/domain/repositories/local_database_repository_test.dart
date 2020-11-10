@@ -10,11 +10,9 @@ Future<void> main() async {
 
   group('LocalDatabaseRepository Test', () {
     test('データの保存・取得に成功する', () async {
-      {
-        const value = 'もくもくさん';
-        await impl.saveName(value);
-        expect(value, await impl.loadName());
-      }
+      const value = 'もくもくさん';
+      await impl.saveName(value);
+      expect(await impl.loadName(), value);
     });
   });
 }
