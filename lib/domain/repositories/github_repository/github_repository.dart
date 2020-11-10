@@ -1,5 +1,5 @@
 import '../../../infrastructures/github/index.dart';
-import 'entities/user.dart';
+import 'entities/user/user.dart';
 
 // ignore: one_member_abstracts
 abstract class GithubRepository {

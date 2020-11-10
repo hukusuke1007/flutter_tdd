@@ -1,1 +1,2 @@
-export 'local_database_repository/local_database_repository.dart';
+export 'github_repository/index.dart';
+export 'local_database_repository/index.dart';
