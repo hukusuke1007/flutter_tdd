@@ -58,6 +58,8 @@ dev_dependencies:
   test:
   mockito:
   mock_web_server:
+  firebase_auth_mocks:
+  google_sign_in_mocks:
 
 flutter:
 
