@@ -22,7 +22,8 @@ void main() {
       final result = await impl.signUpWithEmail(email, password);
       expect(result, isNotNull);
       verify(auth.createUserWithEmailAndPassword(
-          email: email, password: password));
+              email: email, password: password))
+          .called(1);
     });
   });
 }
