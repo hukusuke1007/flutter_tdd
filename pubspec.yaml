@@ -29,8 +29,13 @@ dependencies:
   firebase_auth:
   cloud_functions:
 
+  apple_sign_in:
+  google_sign_in:
+
   # Api Client
   chopper:
+
+
 
 dev_dependencies:
   flutter_test:
