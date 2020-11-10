@@ -36,9 +36,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # Analysis
   pedantic_mono:
+
+  # Generator
   build_runner:
   chopper_generator:
+
+  # Serializer
+  json_serializable:
 
   # RemiSpecial
   freezed:
