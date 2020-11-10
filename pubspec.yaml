@@ -29,12 +29,16 @@ dependencies:
   firebase_auth:
   cloud_functions:
 
+  # Api Client
+  chopper:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   pedantic_mono:
   build_runner:
+  chopper_generator:
 
   # RemiSpecial
   freezed:
