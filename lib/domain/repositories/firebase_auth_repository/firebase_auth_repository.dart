@@ -15,7 +15,7 @@ abstract class FirebaseAuthRepository {
   bool get isEmailVerification;
   Future<String> get idToken;
   Future<UserCredential> signUpWithEmail(String email, String password);
-  Future<UserCredential> signUpWithCredential(AuthCredential authCredential);
+  Future<UserCredential> linkWithCredential(AuthCredential authCredential);
   Future<void> verifyPhoneNumber(
     String countryCode,
     String phoneNumber, {
@@ -73,7 +73,7 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
       _auth.createUserWithEmailAndPassword(email: email, password: password);
 
   @override
-  Future<UserCredential> signUpWithCredential(AuthCredential authCredential) =>
+  Future<UserCredential> linkWithCredential(AuthCredential authCredential) =>
       _auth.currentUser.linkWithCredential(authCredential);
 
   @override
