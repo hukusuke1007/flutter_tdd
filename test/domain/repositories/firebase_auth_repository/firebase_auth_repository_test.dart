@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 class MockAuth extends Mock implements FirebaseAuth {}
 
 void main() {
-  group('FirebaseAuthRepository Test', () {
+  group('モックを使ったテスト', () {
     const email = 'mokumoku@moku.com';
     const password = 'password';
     const mockUid = 'aabbcc';

@@ -6,7 +6,7 @@ Future<void> main() async {
   SharedPreferences.setMockInitialValues(<String, dynamic>{});
   final prefs = await SharedPreferences.getInstance();
   final impl = LocalDatabaseImpl(prefs);
-  group('LocalDatabase Test', () {
+  group('モックを使ったテスト', () {
     const intKey = 'int_key';
     const doubleKey = 'double_key';
     const boolKey = 'bool_key';
