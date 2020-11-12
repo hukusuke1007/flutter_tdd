@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:firebase_auth_mocks/src/mock_user_credential.dart';
-import 'package:flutter_tdd/domain/repositories/firebase_auth_repository/firebase_auth_repository.dart';
+import 'package:flutter_tdd/infrastructures/firebaes_auth/index.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';

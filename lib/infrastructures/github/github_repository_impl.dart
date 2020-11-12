@@ -1,10 +1,6 @@
-import '../../../infrastructures/github/index.dart';
-import 'entities/user/user.dart';
+import 'package:flutter_tdd/domain/repositories/github_repository.dart';
 
-// ignore: one_member_abstracts
-abstract class GithubRepository {
-  Future<List<User>> fetchUsers();
-}
+import 'index.dart';
 
 class GithubRepositoryImpl implements GithubRepository {
   GithubRepositoryImpl(this._githubClient);

@@ -1,6 +1,4 @@
-import 'package:flutter_tdd/domain/repositories/github_repository/github_repository.dart';
-import 'package:flutter_tdd/infrastructures/github/github_client.dart';
-import 'package:flutter_tdd/infrastructures/github/github_client_creator.dart';
+import 'package:flutter_tdd/infrastructures/github/index.dart';
 import 'package:test/test.dart';
 
 void main() {

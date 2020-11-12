@@ -1,10 +1,6 @@
-import '../../../infrastructures/local_database/index.dart';
-import 'local_database_key.dart';
+import 'package:flutter_tdd/domain/repositories/local_database_repository.dart';
 
-abstract class LocalDatabaseRepository {
-  Future<void> saveName(String value);
-  Future<String> loadName();
-}
+import 'index.dart';
 
 class LocalDatabaseRepositoryImpl implements LocalDatabaseRepository {
   LocalDatabaseRepositoryImpl(this._localDatabase);
