@@ -36,7 +36,7 @@ abstract class FirebaseAuthRepository {
   Future<bool> isPasswordVerified(String email, String password);
   Future<CredentialResult> getCredentialWithGoogle();
   Future<CredentialResult> getCredentialWithApple();
-  Future<CredentialResult> getCredentialWithPhoneNumber(
+  CredentialResult getCredentialWithPhoneNumber(
     String code,
     String verificationId,
   );
@@ -166,7 +166,7 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
     );
     return CredentialResult(
       credential: result,
-      userId: googleUser.id,
+      providerId: googleUser.id,
     );
   }
 
@@ -193,22 +193,22 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
     );
     return CredentialResult(
       credential: result,
-      userId: auth.credential.user,
+      providerId: auth.credential.user,
     );
   }
 
   @override
-  Future<CredentialResult> getCredentialWithPhoneNumber(
+  CredentialResult getCredentialWithPhoneNumber(
     String code,
     String verificationId,
-  ) async {
+  ) {
     final credential = PhoneAuthProvider.credential(
       verificationId: verificationId,
       smsCode: code,
     ) as PhoneAuthCredential;
     return CredentialResult(
       credential: credential,
-      userId: credential.providerId,
+      providerId: credential.providerId,
     );
   }
 

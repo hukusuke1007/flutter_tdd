@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 class CredentialResult {
   CredentialResult({
     @required this.credential,
-    @required this.userId,
+    @required this.providerId,
   });
   AuthCredential credential;
-  String userId;
+  String providerId;
 }
