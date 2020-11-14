@@ -3,8 +3,6 @@ import 'package:test/test.dart';
 
 void main() {
   group('FirebaseAuthRepositoryImpl', () {
-    final signInWithAnonymouslyBtn = find.byValueKey('signInWithAnonymously');
-    final signOutBtn = find.byValueKey('signOut');
     final userDeleteBtn = find.byValueKey('userDelete');
 
     FlutterDriver driver;
@@ -21,7 +19,19 @@ void main() {
     });
 
     test('[成功] サインイン（匿名認証）', () async {
-      await driver.tap(signInWithAnonymouslyBtn);
+      final btn = find.byValueKey('signInWithAnonymously');
+      final result = find.byValueKey('signInWithAnonymouslyResult');
+      await driver.tap(btn);
+      // TODO(shohei): ここでresultがOKかNGのどちらかを返すまで待つ
+      // driver.waitForCondition(, timeout: const Duration(seconds: 10));
+      expect(await driver.getText(result), 'OK');
+    });
+
+    test('[成功] サインアウト', () async {
+      final btn = find.byValueKey('signOut');
+      final result = find.byValueKey('signOutResult');
+      await driver.tap(btn);
+      expect(await driver.getText(result), 'OK');
     });
   });
 }

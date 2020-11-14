@@ -5,6 +5,8 @@ import 'package:flutter_tdd/domain/index.dart';
 import 'package:flutter_tdd/infrastructures/firebaes_auth/firebase_auth_repository_impl.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../driver_parts/test_widget.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Flamingo.initializeApp();
@@ -40,8 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
     GoogleSignIn(scopes: ['email']),
   );
 
-  String _result = 'Testing...';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,118 +54,37 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(_result),
-              RaisedButton(
+              TestWidget(
+                title: '[成功] サインイン（匿名認証）',
                 key: const Key('signInWithAnonymously'),
-                padding: const EdgeInsets.all(4),
-                color: Colors.lightBlue,
-                onPressed: () async {
+                resultKey: const Key('signInWithAnonymouslyResult'),
+                onTapTestCase: () async {
                   await impl.signInWithAnonymously();
                 },
-                child: const Text(
-                  'signInWithAnonymously',
-                  style: TextStyle(color: Colors.white),
-                ),
               ),
-              RaisedButton(
+              TestWidget(
+                title: '[成功] サインアウト',
                 key: const Key('signOut'),
-                padding: const EdgeInsets.all(4),
-                color: Colors.lightBlue,
-                onPressed: () async {
+                resultKey: const Key('signOutResult'),
+                onTapTestCase: () async {
                   await impl.signOut();
                 },
-                child: const Text(
-                  'signOut',
-                  style: TextStyle(color: Colors.white),
-                ),
               ),
-              RaisedButton(
+              TestWidget(
+                title: '[成功] ユーザー削除',
                 key: const Key('userDelete'),
-                padding: const EdgeInsets.all(4),
-                color: Colors.lightBlue,
-                onPressed: () async {
+                resultKey: const Key('userDeleteResult'),
+                onTapTestCase: () async {
                   final user = impl.authUser;
                   if (user != null) {
                     await impl.userDelete(user);
                   }
                 },
-                child: const Text(
-                  'userDelete',
-                  style: TextStyle(color: Colors.white),
-                ),
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class TestWidget extends StatefulWidget {
-  const TestWidget({
-    Key key,
-    @required this.title,
-    @required this.onTap,
-  }) : super(key: key);
-
-  final String title;
-  final Future Function() onTap;
-
-  @override
-  _State createState() => _State();
-}
-
-class _State extends State<TestWidget> {
-  bool _successful;
-  Exception _error;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ElevatedButton(
-          key: widget.key,
-          style: ButtonStyle(
-            padding: MaterialStateProperty.all(const EdgeInsets.all(4)),
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
-              const interactiveStates = <MaterialState>{
-                MaterialState.disabled,
-              };
-              if (states.any(interactiveStates.contains)) {
-                return Colors.greenAccent[400];
-              }
-              return Colors.blue;
-            }),
-            textStyle: MaterialStateProperty.all(
-              const TextStyle(color: Colors.white),
-            ),
-          ),
-          onPressed: _successful == null
-              ? () async {
-                  try {
-                    await widget.onTap();
-                    setState(() {
-                      _successful = true;
-                    });
-                  } on Exception catch (e) {
-                    setState(() {
-                      _successful = false;
-                      _error = e;
-                    });
-                  }
-                }
-              : null,
-          child: Text(
-            widget.title,
-            style: const TextStyle(color: Colors.white),
-          ),
-        ),
-        _error != null
-            ? Text(_error.toString(), style: const TextStyle(color: Colors.red))
-            : const SizedBox.shrink(),
-      ],
     );
   }
 }
