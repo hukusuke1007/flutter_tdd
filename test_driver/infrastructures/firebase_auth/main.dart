@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final FirebaseAuthRepository impl = FirebaseAuthRepositoryImpl(
+  final FirebaseAuthRepository repo = FirebaseAuthRepositoryImpl(
     FirebaseAuth.instance,
     GoogleSignIn(scopes: ['email']),
   );
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 key: const Key('signInWithAnonymously'),
                 resultKey: const Key('signInWithAnonymouslyResult'),
                 onTapTestCase: () async {
-                  await impl.signInWithAnonymously();
+                  await repo.signInWithAnonymously();
                 },
               ),
               TestWidget(
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 key: const Key('signOut'),
                 resultKey: const Key('signOutResult'),
                 onTapTestCase: () async {
-                  await impl.signOut();
+                  await repo.signOut();
                 },
               ),
               TestWidget(
@@ -75,11 +75,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 key: const Key('userDelete'),
                 resultKey: const Key('userDeleteResult'),
                 onTapTestCase: () async {
-                  final user = impl.authUser;
+                  final user = repo.authUser;
                   if (user != null) {
-                    await impl.userDelete(user);
+                    await repo.userDelete(user);
                   }
                 },
+                // TODO(shohei): あとはこんなノリで作っていく
               ),
             ],
           ),

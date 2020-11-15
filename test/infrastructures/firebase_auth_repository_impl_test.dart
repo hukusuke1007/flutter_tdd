@@ -24,12 +24,12 @@ void main() {
 
       when(auth.currentUser.emailVerified).thenReturn(isEmailVerified);
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
 
-      expect(impl.loggedInUserId, auth.currentUser.uid);
-      expect(impl.isAnonymously, auth.currentUser.isAnonymous);
-      expect(impl.isEmailVerification, isEmailVerified);
-      expect(await impl.idToken, await auth.currentUser.getIdToken());
+      expect(repo.loggedInUserId, auth.currentUser.uid);
+      expect(repo.isAnonymously, auth.currentUser.isAnonymous);
+      expect(repo.isEmailVerification, isEmailVerified);
+      expect(await repo.idToken, await auth.currentUser.getIdToken());
 
       verify(auth.currentUser.emailVerified).called(1);
     });
@@ -42,8 +42,8 @@ void main() {
           .thenAnswer(
               (_) => Future.value(MockUserCredential(isAnonymous: false)));
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      final result = await impl.signUpWithEmail(email, password);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      final result = await repo.signUpWithEmail(email, password);
       expect(result, isNotNull);
       verify(auth.createUserWithEmailAndPassword(
               email: email, password: password))
@@ -58,8 +58,8 @@ void main() {
       when(auth.currentUser.linkWithCredential(credential)).thenAnswer(
           (_) => Future.value(MockUserCredential(isAnonymous: false)));
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      final result = await impl.linkWithCredential(credential);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      final result = await repo.linkWithCredential(credential);
       expect(result, isNotNull);
       verify(auth.currentUser.linkWithCredential(credential)).called(1);
     });
@@ -78,8 +78,8 @@ void main() {
         codeAutoRetrievalTimeout: null,
       )).thenAnswer((_) => Future<void>.value());
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      await impl.verifyPhoneNumber(countryCode, phoneNumber);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      await repo.verifyPhoneNumber(countryCode, phoneNumber);
       verify(await auth.verifyPhoneNumber(
         phoneNumber: countryCode + phoneNumber,
         forceResendingToken: null,
@@ -98,9 +98,9 @@ void main() {
       final auth = MockFirebaseAuth(signedIn: true);
       final googleSignIn = MockGoogleSignIn();
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      final result = impl.getCredentialWithPhoneNumber(code, verificationId);
-      await impl.updatePhoneNumber(result.credential as PhoneAuthCredential);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      final result = repo.getCredentialWithPhoneNumber(code, verificationId);
+      await repo.updatePhoneNumber(result.credential as PhoneAuthCredential);
       expect(result.credential, isNotNull);
       expect(result.providerId, 'phone');
     });
@@ -109,8 +109,8 @@ void main() {
       final auth = MockFirebaseAuth();
       final googleSignIn = MockGoogleSignIn();
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      final result = await impl.signInWithAnonymously();
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      final result = await repo.signInWithAnonymously();
       expect(result.user.uid, mockUid);
       expect(result.user.isAnonymous, true);
     });
@@ -119,8 +119,8 @@ void main() {
       final auth = MockFirebaseAuth();
       final googleSignIn = MockGoogleSignIn();
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      final result = await impl.signInWithEmail(email, password);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      final result = await repo.signInWithEmail(email, password);
       expect(result.user.uid, mockUid);
       expect(result.user.isAnonymous, false);
     });
@@ -132,10 +132,10 @@ void main() {
       const code = '000000';
       const verificationId = 'verificationId';
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
       final credentialResult =
-          impl.getCredentialWithPhoneNumber(code, verificationId);
-      final userCredential = await impl.signIn(credentialResult.credential);
+          repo.getCredentialWithPhoneNumber(code, verificationId);
+      final userCredential = await repo.signIn(credentialResult.credential);
       expect(userCredential.user.uid, mockUid);
     });
 
@@ -145,8 +145,8 @@ void main() {
       when(auth.currentUser.sendEmailVerification())
           .thenAnswer((_) => Future.value());
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      await impl.sendEmailVerification();
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      await repo.sendEmailVerification();
       verify(auth.currentUser.sendEmailVerification()).called(1);
     });
 
@@ -159,8 +159,8 @@ void main() {
       when(auth.sendPasswordResetEmail(email: email))
           .thenAnswer((_) => Future.value());
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      await impl.resetPasswordEmail(email, password);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      await repo.resetPasswordEmail(email, password);
       verify(auth.signInWithEmailAndPassword(email: email, password: password))
           .called(1);
       verify(auth.sendPasswordResetEmail(email: email)).called(1);
@@ -172,8 +172,8 @@ void main() {
       when(auth.currentUser.reauthenticateWithCredential(any)).thenAnswer(
           (_) => Future.value(MockUserCredential(isAnonymous: false)));
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      await impl.isPasswordVerified(email, password);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      await repo.isPasswordVerified(email, password);
       verify(auth.currentUser.reauthenticateWithCredential(any)).called(1);
     });
 
@@ -182,8 +182,8 @@ void main() {
       final googleSignIn = MockGoogleSignIn();
       when(auth.currentUser.delete()).thenAnswer((_) => Future.value());
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      await impl.userDelete(auth.currentUser);
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      await repo.userDelete(auth.currentUser);
       verify(auth.currentUser.delete()).called(1);
     });
 
@@ -191,8 +191,8 @@ void main() {
       final auth = MockFirebaseAuth(signedIn: true);
       final googleSignIn = MockGoogleSignIn();
 
-      final impl = FirebaseAuthRepositoryImpl(auth, googleSignIn);
-      await impl.signOut();
+      final repo = FirebaseAuthRepositoryImpl(auth, googleSignIn);
+      await repo.signOut();
       expect(auth.currentUser, isNull);
     });
 

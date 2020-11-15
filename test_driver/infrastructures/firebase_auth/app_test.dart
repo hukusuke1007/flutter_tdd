@@ -22,6 +22,9 @@ void main() {
       }
     });
 
+    /**
+     * 正常系
+     */
     test('[成功] サインイン（匿名認証）', () async {
       final btn = find.byValueKey('signInWithAnonymously');
       final result = find.byValueKey('signInWithAnonymouslyResult');
@@ -37,5 +40,7 @@ void main() {
       await driver.tap(btn);
       expect(await driver.getText(result), resultTexts.first);
     });
+
+    // TODO(shohei): あとはこんなノリで作っていく
   });
 }

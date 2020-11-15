@@ -6,13 +6,16 @@ import 'package:test/test.dart';
 Future<void> main() async {
   SharedPreferences.setMockInitialValues(<String, dynamic>{});
   final prefs = await SharedPreferences.getInstance();
-  final impl = LocalDatabaseRepositoryImpl(LocalDatabaseImpl(prefs));
+  final repo = LocalDatabaseRepositoryImpl(LocalDatabaseImpl(prefs));
 
   group('LocalDatabaseRepository Test', () {
+    /**
+     * 正常系
+     */
     test('データの保存・取得に成功する', () async {
       const value = 'もくもくさん';
-      await impl.saveName(value);
-      expect(await impl.loadName(), value);
+      await repo.saveName(value);
+      expect(await repo.loadName(), value);
     });
   });
 }

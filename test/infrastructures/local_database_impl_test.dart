@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 Future<void> main() async {
   SharedPreferences.setMockInitialValues(<String, dynamic>{});
   final prefs = await SharedPreferences.getInstance();
-  final impl = LocalDatabaseImpl(prefs);
+  final repo = LocalDatabaseImpl(prefs);
   group('モックを使ったテスト', () {
     const intKey = 'int_key';
     const doubleKey = 'double_key';
@@ -13,46 +13,49 @@ Future<void> main() async {
     const stringKey = 'string_key';
     const stringListKey = 'string_list_key';
 
+    /**
+     * 正常系
+     */
     test('データの保存・取得・削除に成功する', () async {
       {
         const value = 100;
-        await impl.save<int>(intKey, value);
-        expect(await impl.load<int>(intKey), value);
-        await impl.remove(intKey);
-        expect(await impl.load<int>(intKey), isNull);
+        await repo.save<int>(intKey, value);
+        expect(await repo.load<int>(intKey), value);
+        await repo.remove(intKey);
+        expect(await repo.load<int>(intKey), isNull);
       }
 
       {
         const value = 100.0;
-        await impl.save<double>(doubleKey, value);
-        expect(await impl.load<double>(doubleKey), value);
-        await impl.remove(doubleKey);
-        expect(await impl.load<double>(doubleKey), isNull);
+        await repo.save<double>(doubleKey, value);
+        expect(await repo.load<double>(doubleKey), value);
+        await repo.remove(doubleKey);
+        expect(await repo.load<double>(doubleKey), isNull);
       }
 
       {
         const value = true;
-        await impl.save<bool>(boolKey, value);
-        expect(await impl.load<bool>(boolKey), value);
-        await impl.remove(boolKey);
-        expect(await impl.load<bool>(boolKey), isNull);
+        await repo.save<bool>(boolKey, value);
+        expect(await repo.load<bool>(boolKey), value);
+        await repo.remove(boolKey);
+        expect(await repo.load<bool>(boolKey), isNull);
       }
 
       {
         const value = 'data';
-        await impl.save<String>(stringKey, value);
-        final result = await impl.load<String>(stringKey);
+        await repo.save<String>(stringKey, value);
+        final result = await repo.load<String>(stringKey);
         expect(result, value);
-        await impl.remove(stringKey);
-        expect(await impl.load<String>(stringKey), isNull);
+        await repo.remove(stringKey);
+        expect(await repo.load<String>(stringKey), isNull);
       }
       {
         const value = ['data1', 'data2'];
-        await impl.save<List<String>>(stringListKey, value);
-        final result = await impl.load<List<String>>(stringListKey);
+        await repo.save<List<String>>(stringListKey, value);
+        final result = await repo.load<List<String>>(stringListKey);
         expect(result, value);
-        await impl.remove(stringListKey);
-        expect(await impl.load<List<String>>(stringKey), isNull);
+        await repo.remove(stringListKey);
+        expect(await repo.load<List<String>>(stringKey), isNull);
       }
     });
   });

@@ -9,6 +9,9 @@ import 'mock_data.dart';
 
 void main() {
   group('モックを使ったテスト', () {
+    /**
+     * 正常系
+     */
     test('[成功] ユーザー情報を取得する', () async {
       // 参考: https://hadrien-lejard.gitbook.io/chopper/faq#mock-chopperclient-for-testing
       final mock = MockClient((request) async {
@@ -23,14 +26,18 @@ void main() {
       final result = await impl.fetchUsers();
       expect(result.isNotEmpty, true);
     });
+
+    /**
+     * 異常系
+     */
     test('[失敗] ユーザー情報を取得する', () async {
       final mock = MockClient((request) async {
         return http.Response(json.encode({'error': 'server error'}), 400);
       });
       try {
-        final impl =
+        final repo =
             GithubRepositoryImpl(GithubClient.create(chopperClient(mock)));
-        await impl.fetchUsers();
+        await repo.fetchUsers();
         fail('failed test');
       } on Exception catch (e) {
         expect(e, isNotNull);
