@@ -96,6 +96,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
       for (final doc in snapshot.docs) {
         batch.delete(doc.reference);
       }
+      // TODO(shohei): 500個以上のドキュメントだったらエラーでてあぼーんするはずでその考慮はしてないよん
       await batch.commit();
     }
   }
