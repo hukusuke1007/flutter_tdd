@@ -41,7 +41,7 @@ class _State extends State<TestWidget> {
               const TextStyle(color: Colors.white),
             ),
           ),
-          onPressed: _successful == false
+          onPressed: _successful == null
               ? () async {
                   try {
                     await widget.onTapTestCase();
