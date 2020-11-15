@@ -58,11 +58,15 @@ Future<void> main() async {
       final data = [
         Player(name: 'name1'),
         Player(name: 'name2'),
-        Player(name: 'name3')
+        Player(name: 'name3'),
+        Player(name: 'name4'),
+        Player(name: 'name5'),
+        Player(name: 'name6')
       ];
       await repo.saveAll(data);
-      final result = await repo.loadAll(desc: false);
-      for (var i = 0; i < data.length; i++) {
+      final result = await repo.loadAll(limit: 3, desc: false);
+      expect(result.length, 3);
+      for (var i = 0; i < result.length; i++) {
         _assertPlayer(result[i], data[i]);
       }
     });
