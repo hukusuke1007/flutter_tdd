@@ -10,10 +10,23 @@ class PlayerRepositoryImpl implements PlayerRepository {
   final FirebaseFirestore _firestore;
 
   @override
-  Future<void> save(Player player) => _documentDataSource.save(
+  Future<String> save(Player player) => _documentDataSource.save(
         Player.collectionPath,
-        data: player.toJson(),
+        data: <String, dynamic>{
+          ...player.toJson(),
+          'createdAt': FieldValue.serverTimestamp(),
+          'updatedAt': FieldValue.serverTimestamp(),
+        },
       );
+
+  @override
+  Future<void> update(Player player) async {
+    await _documentDataSource
+        .save(Player.collectionPath, data: <String, dynamic>{
+      ...player.toJson(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+  }
 
   @override
   Future<Player> get(String id) async {
@@ -22,8 +35,8 @@ class PlayerRepositoryImpl implements PlayerRepository {
       return null;
     }
     return Player.fromJson(<String, dynamic>{
-      'id': snapshot.id,
       ...snapshot.data(),
+      'id': snapshot.id,
     });
   }
 
@@ -35,9 +48,15 @@ class PlayerRepositoryImpl implements PlayerRepository {
   Future<void> saveAll(List<Player> players) async {
     final batch = _firestore.batch();
     for (final item in players) {
+      final doc = _firestore.collection(Player.collectionPath).doc(item.id);
       batch.set(
-        _firestore.doc(item.documentPath),
-        item.toJson(),
+        doc,
+        <String, dynamic>{
+          ...item.toJson(),
+          'id': doc.id,
+          'createdAt': FieldValue.serverTimestamp(),
+          'updatedAt': FieldValue.serverTimestamp(),
+        },
         SetOptions(merge: true),
       );
     }
@@ -48,7 +67,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
   Future<List<Player>> getAll({
     int limit = 20,
     String order = 'createdAt',
-    bool desc = false,
+    bool desc = true,
     Source source = Source.serverAndCache,
   }) async {
     final snapshot = await _firestore
@@ -60,7 +79,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
       return [];
     }
     return snapshot.docs
-        .map((e) => Player.fromJson(<String, dynamic>{'id': e.id, ...e.data()}))
+        .map((e) => Player.fromJson(<String, dynamic>{...e.data(), 'id': e.id}))
         .toList();
   }
 }

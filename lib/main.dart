@@ -1,5 +1,8 @@
 import 'package:flamingo/flamingo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tdd/infrastructures/firestore/document_data_source.dart';
+import 'package:flutter_tdd/infrastructures/firestore/entities/index.dart';
+import 'package:flutter_tdd/infrastructures/firestore/player_repository_impl.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
+  void _incrementCounter() async {
     setState(() {
       _counter++;
     });

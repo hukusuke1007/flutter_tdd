@@ -3,7 +3,7 @@ import 'package:flamingo/flamingo.dart';
 import 'package:meta/meta.dart';
 
 abstract class DocumentDataSource {
-  Future<void> save(
+  Future<String> save(
     String collectionPath, {
     String id,
     @required Map<String, dynamic> data,
@@ -25,15 +25,18 @@ class DocumentDataSourceImpl implements DocumentDataSource {
   final FirebaseFirestore _firestore;
 
   @override
-  Future<void> save(
+  Future<String> save(
     String collectionPath, {
     String id,
     @required Map<String, dynamic> data,
-  }) =>
-      _firestore.collection(collectionPath).doc(id).set(
-            data,
-            SetOptions(merge: true),
-          );
+  }) async {
+    final doc = _firestore.collection(collectionPath).doc(id);
+    await doc.set(
+      <String, dynamic>{...data, 'id': doc.id},
+      SetOptions(merge: true),
+    );
+    return doc.id;
+  }
 
   @override
   Future<DocumentSnapshot> get(

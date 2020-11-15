@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../date_time_converter.dart';
@@ -19,5 +20,5 @@ abstract class Player with _$Player {
   static String get collectionPath => 'player';
 
   @late
-  String get documentPath => '$collectionPath/$id';
+  String get documentPath => '${Player.collectionPath}/$id';
 }

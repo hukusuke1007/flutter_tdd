@@ -161,7 +161,7 @@ class _$_Player extends _Player {
   String get documentPath {
     if (_diddocumentPath == false) {
       _diddocumentPath = true;
-      _documentPath = '$collectionPath/$id';
+      _documentPath = '${Player.collectionPath}/$id';
     }
     return _documentPath;
   }

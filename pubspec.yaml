@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.0
 
-
   # RemiSpecial
   flutter_hooks:
   hooks_riverpod:
@@ -34,8 +33,6 @@ dependencies:
 
   # Api Client
   chopper:
-
-
 
 dev_dependencies:
   flutter_test:
