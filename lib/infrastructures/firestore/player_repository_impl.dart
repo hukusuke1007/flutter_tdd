@@ -1,4 +1,4 @@
-import 'package:flamingo/flamingo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_tdd/domain/repositories/player_repository.dart';
 import 'package:flutter_tdd/infrastructures/firestore/document_data_source.dart';
 import 'package:flutter_tdd/infrastructures/firestore/entities/index.dart';
@@ -22,7 +22,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
       return null;
     }
     return Player.fromJson(<String, dynamic>{
-      id: snapshot.id,
+      'id': snapshot.id,
       ...snapshot.data(),
     });
   }
@@ -42,5 +42,25 @@ class PlayerRepositoryImpl implements PlayerRepository {
       );
     }
     await batch.commit();
+  }
+
+  @override
+  Future<List<Player>> getAll({
+    int limit = 20,
+    String order = 'createdAt',
+    bool desc = false,
+    Source source = Source.serverAndCache,
+  }) async {
+    final snapshot = await _firestore
+        .collection(Player.collectionPath)
+        .limit(limit)
+        .orderBy(order, descending: desc)
+        .get(GetOptions(source: source));
+    if (snapshot.docs.isEmpty) {
+      return [];
+    }
+    return snapshot.docs
+        .map((e) => Player.fromJson(<String, dynamic>{'id': e.id, ...e.data()}))
+        .toList();
   }
 }
