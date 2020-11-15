@@ -33,5 +33,23 @@ void main() {
           timeout: timeout); // ラベルが変わるまで待つ
       expect(await driver.getText(result), resultTexts.first);
     });
+
+    test('[成功] プレイヤーを削除する', () async {
+      final btn = find.byValueKey('delete');
+      final result = find.byValueKey('deleteResult');
+      await driver.tap(btn);
+      await driver.waitForExpectText(result, resultTexts,
+          timeout: timeout); // ラベルが変わるまで待つ
+      expect(await driver.getText(result), resultTexts.first);
+    });
+
+    test('[成功] プレイヤーの一括作成・取得する', () async {
+      final btn = find.byValueKey('batchCreateRead');
+      final result = find.byValueKey('batchCreateReadResult');
+      await driver.tap(btn);
+      await driver.waitForExpectText(result, resultTexts,
+          timeout: timeout); // ラベルが変わるまで待つ
+      expect(await driver.getText(result), resultTexts.first);
+    });
   });
 }

@@ -14,4 +14,5 @@ abstract class PlayerRepository {
     Source source = Source.serverAndCache,
     DocumentSnapshot startAfterDocument,
   });
+  Future<void> removeAll();
 }

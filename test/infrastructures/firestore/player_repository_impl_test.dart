@@ -61,7 +61,6 @@ Future<void> main() async {
         Player(name: 'name3'),
         Player(name: 'name4'),
         Player(name: 'name5'),
-        Player(name: 'name6')
       ];
       await repo.saveAll(data);
       final result = await repo.loadAll(limit: 3, desc: false);

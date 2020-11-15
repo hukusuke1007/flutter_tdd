@@ -52,8 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  String _id;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,19 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 resultKey: const Key('createReadUpdateResult'),
                 onTapTestCase: () async {
                   // 作成
-                  {
-                    final player = Player(name: 'name');
-                    _id = await repo.save(player);
-                    final result = await repo.load(_id);
-                    _assertPlayer(result, player);
-                  }
+                  final player = Player(name: 'name1');
+                  final id = await repo.save(player);
+                  final result = await repo.load(id);
+                  _assertPlayer(result, player);
 
                   // 更新
                   {
-                    await repo.save(Player(name: 'name1'));
                     final player = Player(name: 'name2');
-                    await repo.update(_id, player);
-                    final result = await repo.load(_id);
+                    await repo.update(id, player);
+                    final result = await repo.load(id);
                     _assertPlayer(result, player);
                   }
                 },
@@ -94,11 +89,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 key: const Key('delete'),
                 resultKey: const Key('deleteResult'),
                 onTapTestCase: () async {
-                  if (_id != null) {
-                    final id = _id;
-                    await repo.remove(id);
-                    final result = await repo.load(id);
-                    assert(result == null, 'result is null');
+                  final id = await repo.save(Player(name: 'name'));
+                  await repo.remove(id);
+                  final result = await repo.load(id);
+                  assert(result == null, 'result is null');
+                },
+              ),
+              TestWidget(
+                title: '[成功] プレイヤーの一括作成・取得する',
+                key: const Key('batchCreateRead'),
+                resultKey: const Key('batchCreateReadResult'),
+                onTapTestCase: () async {
+                  final data = [
+                    Player(name: 'name1'),
+                    Player(name: 'name2'),
+                    Player(name: 'name3'),
+                  ];
+                  final limit = data.length;
+                  await repo.saveAll(data);
+                  final result = await repo.loadAll(limit: limit, desc: false);
+                  assert(result.length == limit, 'length is ${result.length}');
+                  for (final data in result) {
+                    final player = await repo.load(data.id);
+                    _assertPlayer(player, data);
                   }
                 },
               ),

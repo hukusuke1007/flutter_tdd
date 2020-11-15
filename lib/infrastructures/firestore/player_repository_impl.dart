@@ -87,4 +87,16 @@ class PlayerRepositoryImpl implements PlayerRepository {
         .map((e) => Player.fromJson(<String, dynamic>{...e.data(), 'id': e.id}))
         .toList();
   }
+
+  @override
+  Future<void> removeAll() async {
+    final snapshot = await _firestore.collection(Player.collectionPath).get();
+    if (snapshot.docs.isNotEmpty) {
+      final batch = _firestore.batch();
+      for (final doc in snapshot.docs) {
+        batch.delete(doc.reference);
+      }
+      await batch.commit();
+    }
+  }
 }
