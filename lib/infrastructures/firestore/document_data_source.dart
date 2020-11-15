@@ -8,7 +8,7 @@ abstract class DocumentDataSource {
     String id,
     @required Map<String, dynamic> data,
   });
-  Future<DocumentSnapshot> get(
+  Future<DocumentSnapshot> load(
     String collectionPath,
     String id, {
     Source source = Source.serverAndCache,
@@ -39,7 +39,7 @@ class DocumentDataSourceImpl implements DocumentDataSource {
   }
 
   @override
-  Future<DocumentSnapshot> get(
+  Future<DocumentSnapshot> load(
     String collectionPath,
     String id, {
     Source source = Source.serverAndCache,

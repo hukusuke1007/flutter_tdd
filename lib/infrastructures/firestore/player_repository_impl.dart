@@ -29,8 +29,8 @@ class PlayerRepositoryImpl implements PlayerRepository {
   }
 
   @override
-  Future<Player> get(String id) async {
-    final snapshot = await _documentDataSource.get(Player.collectionPath, id);
+  Future<Player> load(String id) async {
+    final snapshot = await _documentDataSource.load(Player.collectionPath, id);
     if (!snapshot.exists) {
       return null;
     }
@@ -64,7 +64,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
   }
 
   @override
-  Future<List<Player>> getAll({
+  Future<List<Player>> loadAll({
     int limit = 20,
     String order = 'createdAt',
     bool desc = true,
