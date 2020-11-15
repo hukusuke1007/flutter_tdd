@@ -11,8 +11,8 @@ abstract class Player with _$Player {
   factory Player({
     String id,
     String name,
-    @DateTimeConverter() DateTime updatedAt,
     @DateTimeConverter() DateTime createdAt,
+    @DateTimeConverter() DateTime updatedAt,
   }) = _Player;
   Player._();
   factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);

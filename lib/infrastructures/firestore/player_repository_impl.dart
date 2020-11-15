@@ -69,12 +69,16 @@ class PlayerRepositoryImpl implements PlayerRepository {
     String order = 'createdAt',
     bool desc = true,
     Source source = Source.serverAndCache,
+    DocumentSnapshot startAfterDocument,
   }) async {
-    final snapshot = await _firestore
+    var query = _firestore
         .collection(Player.collectionPath)
         .limit(limit)
-        .orderBy(order, descending: desc)
-        .get(GetOptions(source: source));
+        .orderBy(order, descending: desc);
+    if (startAfterDocument != null) {
+      query = query.startAfterDocument(startAfterDocument);
+    }
+    final snapshot = await query.get(GetOptions(source: source));
     if (snapshot.docs.isEmpty) {
       return [];
     }

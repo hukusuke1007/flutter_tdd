@@ -20,13 +20,13 @@ class _$PlayerTearOff {
   _Player call(
       {String id,
       String name,
-      @DateTimeConverter() DateTime updatedAt,
-      @DateTimeConverter() DateTime createdAt}) {
+      @DateTimeConverter() DateTime createdAt,
+      @DateTimeConverter() DateTime updatedAt}) {
     return _Player(
       id: id,
       name: name,
-      updatedAt: updatedAt,
       createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 
@@ -45,9 +45,9 @@ mixin _$Player {
   String get id;
   String get name;
   @DateTimeConverter()
-  DateTime get updatedAt;
-  @DateTimeConverter()
   DateTime get createdAt;
+  @DateTimeConverter()
+  DateTime get updatedAt;
 
   Map<String, dynamic> toJson();
   $PlayerCopyWith<Player> get copyWith;
@@ -60,8 +60,8 @@ abstract class $PlayerCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      @DateTimeConverter() DateTime updatedAt,
-      @DateTimeConverter() DateTime createdAt});
+      @DateTimeConverter() DateTime createdAt,
+      @DateTimeConverter() DateTime updatedAt});
 }
 
 /// @nodoc
@@ -76,16 +76,16 @@ class _$PlayerCopyWithImpl<$Res> implements $PlayerCopyWith<$Res> {
   $Res call({
     Object id = freezed,
     Object name = freezed,
-    Object updatedAt = freezed,
     Object createdAt = freezed,
+    Object updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
-      updatedAt:
-          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
       createdAt:
           createdAt == freezed ? _value.createdAt : createdAt as DateTime,
+      updatedAt:
+          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
     ));
   }
 }
@@ -98,8 +98,8 @@ abstract class _$PlayerCopyWith<$Res> implements $PlayerCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      @DateTimeConverter() DateTime updatedAt,
-      @DateTimeConverter() DateTime createdAt});
+      @DateTimeConverter() DateTime createdAt,
+      @DateTimeConverter() DateTime updatedAt});
 }
 
 /// @nodoc
@@ -115,16 +115,16 @@ class __$PlayerCopyWithImpl<$Res> extends _$PlayerCopyWithImpl<$Res>
   $Res call({
     Object id = freezed,
     Object name = freezed,
-    Object updatedAt = freezed,
     Object createdAt = freezed,
+    Object updatedAt = freezed,
   }) {
     return _then(_Player(
       id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
-      updatedAt:
-          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
       createdAt:
           createdAt == freezed ? _value.createdAt : createdAt as DateTime,
+      updatedAt:
+          updatedAt == freezed ? _value.updatedAt : updatedAt as DateTime,
     ));
   }
 }
@@ -136,8 +136,8 @@ class _$_Player extends _Player {
   _$_Player(
       {this.id,
       this.name,
-      @DateTimeConverter() this.updatedAt,
-      @DateTimeConverter() this.createdAt})
+      @DateTimeConverter() this.createdAt,
+      @DateTimeConverter() this.updatedAt})
       : super._();
 
   factory _$_Player.fromJson(Map<String, dynamic> json) =>
@@ -149,10 +149,10 @@ class _$_Player extends _Player {
   final String name;
   @override
   @DateTimeConverter()
-  final DateTime updatedAt;
+  final DateTime createdAt;
   @override
   @DateTimeConverter()
-  final DateTime createdAt;
+  final DateTime updatedAt;
 
   bool _diddocumentPath = false;
   String _documentPath;
@@ -168,7 +168,7 @@ class _$_Player extends _Player {
 
   @override
   String toString() {
-    return 'Player(id: $id, name: $name, updatedAt: $updatedAt, createdAt: $createdAt, documentPath: $documentPath)';
+    return 'Player(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, documentPath: $documentPath)';
   }
 
   @override
@@ -179,12 +179,12 @@ class _$_Player extends _Player {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.updatedAt, updatedAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.updatedAt, updatedAt)) &&
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.createdAt, createdAt)));
+                    .equals(other.createdAt, createdAt)) &&
+            (identical(other.updatedAt, updatedAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedAt, updatedAt)));
   }
 
   @override
@@ -192,8 +192,8 @@ class _$_Player extends _Player {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(updatedAt) ^
-      const DeepCollectionEquality().hash(createdAt);
+      const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(updatedAt);
 
   @override
   _$PlayerCopyWith<_Player> get copyWith =>
@@ -210,8 +210,8 @@ abstract class _Player extends Player {
   factory _Player(
       {String id,
       String name,
-      @DateTimeConverter() DateTime updatedAt,
-      @DateTimeConverter() DateTime createdAt}) = _$_Player;
+      @DateTimeConverter() DateTime createdAt,
+      @DateTimeConverter() DateTime updatedAt}) = _$_Player;
 
   factory _Player.fromJson(Map<String, dynamic> json) = _$_Player.fromJson;
 
@@ -221,10 +221,10 @@ abstract class _Player extends Player {
   String get name;
   @override
   @DateTimeConverter()
-  DateTime get updatedAt;
+  DateTime get createdAt;
   @override
   @DateTimeConverter()
-  DateTime get createdAt;
+  DateTime get updatedAt;
   @override
   _$PlayerCopyWith<_Player> get copyWith;
 }
