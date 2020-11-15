@@ -16,7 +16,7 @@ Future<void> main() async {
     /**
      * 正常系
      */
-    test('[成功] 作成・取得・更新・削除に成功する', () async {
+    test('[成功] プレイヤーの作成・取得・更新する', () async {
       final mock = MockFirestoreInstance();
       final dataSource = DocumentDataSourceImpl(mock);
       final repo = PlayerRepositoryImpl(dataSource, mock);
@@ -36,6 +36,34 @@ Future<void> main() async {
         await repo.update(id, player);
         final result = await repo.load(id);
         _assertPlayer(result, player);
+      }
+    });
+
+    test('[成功] プレイヤーを削除する', () async {
+      final mock = MockFirestoreInstance();
+      final dataSource = DocumentDataSourceImpl(mock);
+      final repo = PlayerRepositoryImpl(dataSource, mock);
+
+      final id = await repo.save(Player(name: 'name'));
+      await repo.remove(id);
+      final result = await repo.load(id);
+      expect(result, isNull);
+    });
+
+    test('[成功] プレイヤーの一括作成・取得する', () async {
+      final mock = MockFirestoreInstance();
+      final dataSource = DocumentDataSourceImpl(mock);
+      final repo = PlayerRepositoryImpl(dataSource, mock);
+
+      final data = [
+        Player(name: 'name1'),
+        Player(name: 'name2'),
+        Player(name: 'name3')
+      ];
+      await repo.saveAll(data);
+      final result = await repo.loadAll(desc: false);
+      for (var i = 0; i < data.length; i++) {
+        _assertPlayer(result[i], data[i]);
       }
     });
   });

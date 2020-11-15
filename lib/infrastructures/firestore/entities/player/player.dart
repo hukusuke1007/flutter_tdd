@@ -15,13 +15,15 @@ abstract class Player with _$Player {
     @DateTimeConverter() DateTime updatedAt,
   }) = _Player;
   Player._();
+
   factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
+
+  static String get collectionPath => 'player';
+
   Map<String, dynamic> toData() {
     final value = toJson()..remove('createdAt')..remove('updatedAt');
     return value;
   }
-
-  static String get collectionPath => 'player';
 
   @late
   String get documentPath => '${Player.collectionPath}/$id';
