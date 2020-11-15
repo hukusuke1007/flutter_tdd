@@ -20,10 +20,8 @@ abstract class Player with _$Player {
 
   static String get collectionPath => 'player';
 
-  Map<String, dynamic> toData() {
-    final value = toJson()..remove('createdAt')..remove('updatedAt');
-    return value;
-  }
+  Map<String, dynamic> toData() =>
+      toJson()..remove('createdAt')..remove('updatedAt');
 
   @late
   String get documentPath => '${Player.collectionPath}/$id';
