@@ -13,20 +13,21 @@ class PlayerRepositoryImpl implements PlayerRepository {
   Future<String> save(Player player) => _documentDataSource.save(
         Player.collectionPath,
         data: <String, dynamic>{
-          ...player.toJson(),
+          ...player.toData(),
           'createdAt': FieldValue.serverTimestamp(),
           'updatedAt': FieldValue.serverTimestamp(),
         },
       );
 
   @override
-  Future<void> update(Player player) async {
-    await _documentDataSource
-        .save(Player.collectionPath, data: <String, dynamic>{
-      ...player.toJson(),
-      'updatedAt': FieldValue.serverTimestamp(),
-    });
-  }
+  Future<void> update(String id, Player player) => _documentDataSource.save(
+        Player.collectionPath,
+        id: id,
+        data: <String, dynamic>{
+          ...player.toData(),
+          'updatedAt': FieldValue.serverTimestamp(),
+        },
+      );
 
   @override
   Future<Player> load(String id) async {
@@ -52,7 +53,7 @@ class PlayerRepositoryImpl implements PlayerRepository {
       batch.set(
         doc,
         <String, dynamic>{
-          ...item.toJson(),
+          ...item.toData(),
           'id': doc.id,
           'createdAt': FieldValue.serverTimestamp(),
           'updatedAt': FieldValue.serverTimestamp(),

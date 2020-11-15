@@ -3,7 +3,7 @@ import 'package:flutter_tdd/infrastructures/firestore/entities/index.dart';
 
 abstract class PlayerRepository {
   Future<String> save(Player player);
-  Future<void> update(Player player);
+  Future<void> update(String id, Player player);
   Future<Player> load(String id);
   Future<void> remove(String id);
   Future<void> saveAll(List<Player> players);

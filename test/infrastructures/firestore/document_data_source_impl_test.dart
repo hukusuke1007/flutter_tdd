@@ -3,7 +3,7 @@ import 'package:flutter_tdd/infrastructures/firestore/document_data_source.dart'
 import 'package:test/test.dart';
 
 Future<void> main() async {
-  group('DocumentDataSource', () {
+  group('DocumentDataSourceImpl', () {
     const collectionPath = 'collectionPath';
     const data1 = <String, dynamic>{'name': 'name1'};
     const data2 = <String, dynamic>{'name': 'name2'};
