@@ -14,7 +14,7 @@ Future<void> main() async {
     test('[成功] 画像を保存する', () async {
       final storage = MockFirebaseStorage();
       final dataSource = FirebaseStorageDataSourceImpl(storage);
-      final repo = UserProfileRepositoryImpl(dataSource);
+      final repo = UserProfileImageRepositoryImpl(dataSource);
 
       const filename = 'sample.jpg';
       final image = File(filename);
@@ -30,7 +30,7 @@ Future<void> main() async {
     test('[成功] 画像を削除する', () async {
       final storage = MockFirebaseStorage();
       final dataSource = FirebaseStorageDataSourceImpl(storage);
-      final repo = UserProfileRepositoryImpl(dataSource);
+      final repo = UserProfileImageRepositoryImpl(dataSource);
 
       const filename = 'sample.jpg';
       final image = File(filename);
