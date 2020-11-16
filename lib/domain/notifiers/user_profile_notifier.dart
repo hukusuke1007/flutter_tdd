@@ -4,9 +4,8 @@ import 'package:flutter_tdd/domain/repositories/index.dart';
 import 'package:flutter_tdd/infrastructures/firestore/entities/user_profile/user_profile.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-class UserProfilePageNotifier extends StateNotifier<UserProfile>
-    with LocatorMixin {
-  UserProfilePageNotifier() : super(UserProfile()) {
+class UserProfileNotifier extends StateNotifier<UserProfile> with LocatorMixin {
+  UserProfileNotifier() : super(UserProfile()) {
     Future<void>.delayed(Duration.zero, _configure);
   }
 
