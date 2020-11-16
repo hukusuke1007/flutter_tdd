@@ -1,5 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_tdd/infrastructures/firestore/document_data_source.dart';
 import 'package:flutter_tdd/infrastructures/firestore/entities/index.dart';
+import 'package:flutter_tdd/infrastructures/firestore/player_repository_impl.dart';
+import 'package:hooks_riverpod/all.dart';
+
+final playerRepositoryProvider = Provider<PlayerRepository>((_) {
+  final firestore = FirebaseFirestore.instance;
+  final dataSource = DocumentDataSourceImpl(firestore);
+  return PlayerRepositoryImpl(dataSource, firestore);
+});
 
 abstract class PlayerRepository {
   Future<String> save(Player player);
