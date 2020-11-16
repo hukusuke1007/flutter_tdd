@@ -9,7 +9,6 @@ final userProfileNotifierProviderAutoDispose =
     StateNotifierProvider.autoDispose<UserProfileNotifier>(
         (ref) => UserProfileNotifier(ref.read));
 
-// シングルトン
 final userProfileNotifierProvider = StateNotifierProvider<UserProfileNotifier>(
     (ref) => UserProfileNotifier(ref.read));
 
