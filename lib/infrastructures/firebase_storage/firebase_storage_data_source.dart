@@ -54,11 +54,9 @@ class FirebaseStorageDataSourceImpl implements FirebaseStorageDataSource {
         customMetadata: metadata,
       ),
     );
-    uploadTask.snapshotEvents.listen((event) async {
-      if (_uploader != null) {
-        _uploader.add(event);
-      }
-    });
+    if (_uploader != null) {
+      uploadTask.snapshotEvents.listen(_uploader.add);
+    }
     final snapshot = await uploadTask.whenComplete(() => null);
     final downloadUrl = await snapshot.ref.getDownloadURL();
     return downloadUrl;
