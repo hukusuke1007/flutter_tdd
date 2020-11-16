@@ -24,7 +24,7 @@ Future<void> main() async {
     const name = 'mokumoku';
     final mockUserProfileRepo = MockUserProfileRepository();
     final mockUserProfileImageRepo = MockUserProfileImageRepository();
-    final mockFirebaseAuth = MockFirebaseAuthRepository();
+    final mockFirebaseAuthRepo = MockFirebaseAuthRepository();
     final storageFile = StorageFile(url: 'image_url');
     final userProfile = UserProfile(
       id: id,
@@ -37,14 +37,15 @@ Future<void> main() async {
           .thenAnswer((_) => Future.value(userProfile));
       when(mockUserProfileImageRepo.save(any, any))
           .thenAnswer((_) => Future.value(storageFile));
-      when(mockFirebaseAuth.loggedInUserId).thenReturn(null);
+      when(mockFirebaseAuthRepo.loggedInUserId).thenReturn(null);
 
       container = ProviderContainer(
         overrides: [
           userProfileRepositoryProvider.overrideWithValue(mockUserProfileRepo),
           userProfileImageRepositoryProvider
               .overrideWithValue(mockUserProfileImageRepo),
-          firebaseAuthRepositoryProvider.overrideWithValue(mockFirebaseAuth),
+          firebaseAuthRepositoryProvider
+              .overrideWithValue(mockFirebaseAuthRepo),
         ],
       );
       ref = container.read(Provider((ref) => ref));
@@ -61,6 +62,8 @@ Future<void> main() async {
       expect(userProfileNotifier.debugState.name, name);
 
       verify(mockUserProfileRepo.save(any)).called(1);
+      verifyNever(mockFirebaseAuthRepo.loggedInUserId).called(0);
+      verifyNever(mockUserProfileRepo.load(any)).called(0);
     });
     test('[成功] プロフィール画像を保存', () async {
       final userProfileNotifier = ref.read(userProfileNotifierProvider);
@@ -70,6 +73,8 @@ Future<void> main() async {
       expect(userProfileNotifier.debugState.image, storageFile);
 
       verify(mockUserProfileImageRepo.save(any, any)).called(1);
+      // verifyNever(mockFirebaseAuthRepo.loggedInUserId).called(0); // TODO(shohei): groupでテストすると謎のエラーがでる。単発だと発生しない。
+      verifyNever(mockUserProfileRepo.load(any)).called(0);
     });
     test('[成功] プロフィールを取得', () async {
       final userProfileNotifier = ref.read(userProfileNotifierProvider);
@@ -79,6 +84,8 @@ Future<void> main() async {
       expect(userProfileNotifier.debugState.name, name);
 
       verify(mockUserProfileRepo.load(any)).called(1);
+      // verifyNever(mockFirebaseAuthRepo.loggedInUserId).called(0);　// TODO(shohei): groupでテストすると謎のエラーがでる。単発だと発生しない。
+      verifyNever(mockUserProfileRepo.save(any)).called(0);
     });
   });
 }
