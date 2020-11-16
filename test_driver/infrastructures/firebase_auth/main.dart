@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flamingo/flamingo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tdd/domain/index.dart';
+import 'package:flutter_tdd/domain/repositories/index.dart';
 import 'package:flutter_tdd/infrastructures/firebaes_auth/firebase_auth_repository_impl.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

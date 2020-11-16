@@ -1,6 +1,6 @@
 import 'package:flamingo/flamingo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tdd/domain/index.dart';
+import 'package:flutter_tdd/domain/repositories/index.dart';
 import 'package:flutter_tdd/infrastructures/firestore/document_data_source.dart';
 import 'package:flutter_tdd/infrastructures/firestore/entities/index.dart';
 import 'package:flutter_tdd/infrastructures/firestore/player_repository_impl.dart';

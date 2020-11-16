@@ -1,5 +1,4 @@
-import 'package:flutter_tdd/infrastructures/index.dart';
-import 'package:flutter_tdd/infrastructures/local_database/local_database_repository_impl.dart';
+import 'package:flutter_tdd/infrastructures/local_database/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/test.dart';
 

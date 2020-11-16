@@ -18,7 +18,7 @@ abstract class Player with _$Player {
 
   factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
 
-  static String get collectionPath => 'player';
+  static String get collectionPath => 'players';
 
   Map<String, dynamic> toData() =>
       toJson()..remove('createdAt')..remove('updatedAt');
