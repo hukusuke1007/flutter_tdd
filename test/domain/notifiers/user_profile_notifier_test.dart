@@ -21,13 +21,14 @@ Future<void> main() async {
     ProviderContainer container;
     ProviderReference ref;
     const id = 'userId';
+    const name = 'mokumoku';
     final mockUserProfileRepo = MockUserProfileRepository();
     final mockUserProfileImageRepo = MockUserProfileImageRepository();
     final mockFirebaseAuth = MockFirebaseAuthRepository();
     final storageFile = StorageFile(url: 'image_url');
     final userProfile = UserProfile(
       id: id,
-      name: 'mokumoku',
+      name: name,
       image: storageFile,
     );
     setUp(() async {
@@ -54,7 +55,7 @@ Future<void> main() async {
     test('[成功] プロフィールを保存', () async {
       final userProfileNotifier = ref.read(userProfileNotifierProvider);
 
-      const name = 'mokumoku';
+      const name = 'mokumoku1';
       await userProfileNotifier.saveProfile(id, name);
       expect(userProfileNotifier.debugState.id, id);
       expect(userProfileNotifier.debugState.name, name);
@@ -73,7 +74,6 @@ Future<void> main() async {
     test('[成功] プロフィールを取得', () async {
       final userProfileNotifier = ref.read(userProfileNotifierProvider);
 
-      const name = 'mokumoku';
       await userProfileNotifier.loadProfile(id);
       expect(userProfileNotifier.debugState.id, id);
       expect(userProfileNotifier.debugState.name, name);
