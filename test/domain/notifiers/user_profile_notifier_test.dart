@@ -46,8 +46,7 @@ Future<void> main() async {
           firebaseAuthRepositoryProvider.overrideWithValue(mockFirebaseAuth),
         ],
       );
-      final provider = Provider((ref) => ref);
-      ref = container.read(provider);
+      ref = container.read(Provider((ref) => ref));
     });
     /**
      * 正常系
