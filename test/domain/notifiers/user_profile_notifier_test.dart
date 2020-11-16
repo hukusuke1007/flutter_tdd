@@ -52,7 +52,7 @@ Future<void> main() async {
     /**
      * 正常系
      */
-    test('プロフィールを保存', () async {
+    test('[成功] プロフィールを保存', () async {
       final userProfileNotifier = ref.read(userProfileNotifierProvider);
 
       const name = 'mokumoku';
@@ -62,7 +62,7 @@ Future<void> main() async {
 
       verify(mockUserProfileRepo.save(any)).called(1);
     });
-    test('プロフィール画像を保存', () async {
+    test('[成功] プロフィール画像を保存', () async {
       final userProfileNotifier = ref.read(userProfileNotifierProvider);
 
       await userProfileNotifier.saveImage(id, File('sample.jpg'));
@@ -71,7 +71,7 @@ Future<void> main() async {
 
       verify(mockUserProfileImageRepo.save(any, any)).called(1);
     });
-    test('プロフィールを取得', () async {
+    test('[成功] プロフィールを取得', () async {
       final userProfileNotifier = ref.read(userProfileNotifierProvider);
 
       const name = 'mokumoku';
