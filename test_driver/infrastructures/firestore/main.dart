@@ -19,7 +19,8 @@ void _assertPlayer(Player actual, Player data) {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseFirestore.instance.settings = getFirestoreEmulatorSetting();
+  setFirestoreEmulator();
+  setFirebaseAuthEmulator();
   runApp(MyApp());
 }
 
