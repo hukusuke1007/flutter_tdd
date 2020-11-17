@@ -1,4 +1,7 @@
-import 'package:flamingo/flamingo.dart';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tdd/domain/repositories/index.dart';
 import 'package:flutter_tdd/infrastructures/firestore/document_data_source.dart';
@@ -12,9 +15,16 @@ void _assertPlayer(Player actual, Player data) {
   assert(actual.updatedAt != null, 'updatedAt is null');
 }
 
+Settings getFirestoreEmulatorSetting({int port = 8080}) => Settings(
+      persistenceEnabled: false,
+      host: '${Platform.isAndroid ? '10.0.2.2' : 'localhost'}:$port',
+      sslEnabled: false,
+    );
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Flamingo.initializeApp();
+  await Firebase.initializeApp();
+  FirebaseFirestore.instance.settings = getFirestoreEmulatorSetting();
   runApp(MyApp());
 }
 
