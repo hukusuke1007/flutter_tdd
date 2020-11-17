@@ -1,10 +1,12 @@
-import 'package:flamingo/flamingo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tdd/domain/repositories/index.dart';
 import 'package:flutter_tdd/infrastructures/firestore/document_data_source.dart';
 import 'package:flutter_tdd/infrastructures/firestore/entities/index.dart';
 import 'package:flutter_tdd/infrastructures/firestore/player_repository_impl.dart';
 
+import '../../driver_parts/firebase_emulator.dart';
 import '../../driver_parts/test_widget.dart';
 
 void _assertPlayer(Player actual, Player data) {
@@ -16,7 +18,8 @@ void _assertPlayer(Player actual, Player data) {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Flamingo.initializeApp();
+  await Firebase.initializeApp();
+  FirebaseFirestore.instance.settings = getFirestoreEmulatorSetting();
   runApp(MyApp());
 }
 
