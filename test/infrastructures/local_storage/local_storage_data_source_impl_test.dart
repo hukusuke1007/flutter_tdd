@@ -66,7 +66,7 @@ Future<void> main() async {
         ..remove(rawJsonFilename);
 
       expect(dataSource.isExist(rawJsonFilename), false);
-      expect(dataSource.load(rawJsonFilename), isNull);
+      expect(dataSource.loadWithString(rawJsonFilename), isNull);
     });
 
     test('データの削除に成功する（新しいディレクトリを作成）', () {

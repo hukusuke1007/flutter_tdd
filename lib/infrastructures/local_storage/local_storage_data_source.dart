@@ -16,7 +16,7 @@ abstract class LocalStorageDataSource {
     String filename, {
     String dirPath,
   });
-  String loadToString(
+  String loadWithString(
     String filename, {
     String dirPath,
     Encoding encoding = utf8,
@@ -85,13 +85,12 @@ class LocalStorageDataSourceImpl implements LocalStorageDataSource {
   }
 
   @override
-  String loadToString(
+  String loadWithString(
     String filename, {
     String dirPath,
     Encoding encoding = utf8,
   }) {
-    final dir = _getDir(dirPath);
-    final file = File('${dir.path}/$filename');
+    final file = File('${_getDir(dirPath).path}/$filename');
     return file.existsSync() ? file.readAsStringSync(encoding: encoding) : null;
   }
 
