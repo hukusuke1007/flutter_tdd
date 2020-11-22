@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LocalDatabaseDataSource {
-  Future<T> load<T>(String key);
   Future<bool> save<T>(String key, T value);
+  Future<T> load<T>(String key);
   Future<bool> remove(String key);
 }
 
@@ -10,26 +10,6 @@ class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
   LocalDatabaseDataSourceImpl(this._prefs);
 
   final SharedPreferences _prefs;
-
-  @override
-  Future<T> load<T>(String key) async {
-    if (T.toString() == 'int') {
-      return _prefs.getInt(key) as T;
-    }
-    if (T.toString() == 'double') {
-      return _prefs.getDouble(key) as T;
-    }
-    if (T.toString() == 'bool') {
-      return _prefs.getBool(key) as T;
-    }
-    if (T.toString() == 'String') {
-      return _prefs.getString(key) as T;
-    }
-    if (T.toString() == 'List<String>') {
-      return _prefs.getStringList(key) as T;
-    }
-    return null;
-  }
 
   @override
   Future<bool> save<T>(String key, T value) async {
@@ -52,7 +32,25 @@ class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
   }
 
   @override
-  Future<bool> remove(String key) async {
-    return _prefs.remove(key);
+  Future<T> load<T>(String key) async {
+    if (T.toString() == 'int') {
+      return _prefs.getInt(key) as T;
+    }
+    if (T.toString() == 'double') {
+      return _prefs.getDouble(key) as T;
+    }
+    if (T.toString() == 'bool') {
+      return _prefs.getBool(key) as T;
+    }
+    if (T.toString() == 'String') {
+      return _prefs.getString(key) as T;
+    }
+    if (T.toString() == 'List<String>') {
+      return _prefs.getStringList(key) as T;
+    }
+    return null;
   }
+
+  @override
+  Future<bool> remove(String key) => _prefs.remove(key);
 }
