@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 Future<void> main() async {
   SharedPreferences.setMockInitialValues(<String, dynamic>{});
   final prefs = await SharedPreferences.getInstance();
-  final repo = LocalDatabaseRepositoryImpl(LocalDatabaseImpl(prefs));
+  final repo = LocalDatabaseRepositoryImpl(LocalDatabaseDataSourceImpl(prefs));
 
   group('LocalDatabaseRepository Test', () {
     /**

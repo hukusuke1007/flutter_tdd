@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 final localDatabaseRepositoryProvider =
     FutureProvider<LocalDatabaseRepository>((_) async {
   final pref = await SharedPreferences.getInstance();
-  final dataSource = LocalDatabaseImpl(pref);
+  final dataSource = LocalDatabaseDataSourceImpl(pref);
   return LocalDatabaseRepositoryImpl(dataSource);
 });
 

@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 Future<void> main() async {
   SharedPreferences.setMockInitialValues(<String, dynamic>{});
   final prefs = await SharedPreferences.getInstance();
-  final repo = LocalDatabaseImpl(prefs);
+  final dataSource = LocalDatabaseDataSourceImpl(prefs);
   group('モックを使ったテスト', () {
     const intKey = 'int_key';
     const doubleKey = 'double_key';
@@ -19,43 +19,43 @@ Future<void> main() async {
     test('データの保存・取得・削除に成功する', () async {
       {
         const value = 100;
-        await repo.save<int>(intKey, value);
-        expect(await repo.load<int>(intKey), value);
-        await repo.remove(intKey);
-        expect(await repo.load<int>(intKey), isNull);
+        await dataSource.save<int>(intKey, value);
+        expect(await dataSource.load<int>(intKey), value);
+        await dataSource.remove(intKey);
+        expect(await dataSource.load<int>(intKey), isNull);
       }
 
       {
         const value = 100.0;
-        await repo.save<double>(doubleKey, value);
-        expect(await repo.load<double>(doubleKey), value);
-        await repo.remove(doubleKey);
-        expect(await repo.load<double>(doubleKey), isNull);
+        await dataSource.save<double>(doubleKey, value);
+        expect(await dataSource.load<double>(doubleKey), value);
+        await dataSource.remove(doubleKey);
+        expect(await dataSource.load<double>(doubleKey), isNull);
       }
 
       {
         const value = true;
-        await repo.save<bool>(boolKey, value);
-        expect(await repo.load<bool>(boolKey), value);
-        await repo.remove(boolKey);
-        expect(await repo.load<bool>(boolKey), isNull);
+        await dataSource.save<bool>(boolKey, value);
+        expect(await dataSource.load<bool>(boolKey), value);
+        await dataSource.remove(boolKey);
+        expect(await dataSource.load<bool>(boolKey), isNull);
       }
 
       {
         const value = 'data';
-        await repo.save<String>(stringKey, value);
-        final result = await repo.load<String>(stringKey);
+        await dataSource.save<String>(stringKey, value);
+        final result = await dataSource.load<String>(stringKey);
         expect(result, value);
-        await repo.remove(stringKey);
-        expect(await repo.load<String>(stringKey), isNull);
+        await dataSource.remove(stringKey);
+        expect(await dataSource.load<String>(stringKey), isNull);
       }
       {
         const value = ['data1', 'data2'];
-        await repo.save<List<String>>(stringListKey, value);
-        final result = await repo.load<List<String>>(stringListKey);
+        await dataSource.save<List<String>>(stringListKey, value);
+        final result = await dataSource.load<List<String>>(stringListKey);
         expect(result, value);
-        await repo.remove(stringListKey);
-        expect(await repo.load<List<String>>(stringKey), isNull);
+        await dataSource.remove(stringListKey);
+        expect(await dataSource.load<List<String>>(stringKey), isNull);
       }
     });
   });

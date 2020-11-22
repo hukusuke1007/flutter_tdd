@@ -1,13 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class LocalDatabase {
+abstract class LocalDatabaseDataSource {
   Future<T> load<T>(String key);
   Future<bool> save<T>(String key, T value);
   Future<bool> remove(String key);
 }
 
-class LocalDatabaseImpl implements LocalDatabase {
-  LocalDatabaseImpl(this._prefs);
+class LocalDatabaseDataSourceImpl implements LocalDatabaseDataSource {
+  LocalDatabaseDataSourceImpl(this._prefs);
 
   final SharedPreferences _prefs;
 

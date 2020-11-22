@@ -20,18 +20,23 @@ dependencies:
   # Logger
   simple_logger:
 
-  # Database
+  # LocalDatabase
   shared_preferences:
+
+  # LocalStorage
+  path_provider:
+  flutter_cache_manager:
 
   # Firebase
   flamingo:
   firebase_auth:
   cloud_functions:
 
+  # SignIn
   apple_sign_in:
   google_sign_in:
 
-  # Api Client
+  # ApiClient
   chopper:
 
 dev_dependencies:
