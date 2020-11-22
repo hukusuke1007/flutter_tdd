@@ -12,12 +12,14 @@ Future<void> main() async {
      * 正常系
      */
     const rawFilename = 'sample.jpg';
+    const rawJsonFilename = 'sample.json';
     const subDir = '0';
     const rawFilePath = '$rooDir/$rawFilename';
 
     void cleanUp() {
       dataSource
         ..remove(rawFilename)
+        ..remove(rawJsonFilename)
         ..removeDir(subDir);
     }
 
@@ -29,7 +31,15 @@ Future<void> main() async {
 
       expect(dataSource.isExist(rawFilename), true);
       expect(dataSource.load(rawFilename), isNotNull);
-    }, retry: 1);
+    });
+
+    test('データの保存と取得に成功する（文字列）', () {
+      const data = '{id: \"0\"}';
+      dataSource.saveWithString(data, rawJsonFilename);
+
+      expect(dataSource.isExist(rawJsonFilename), true);
+      expect(dataSource.load(rawJsonFilename), isNotNull);
+    });
 
     test('データの保存と取得に成功する（新しいディレクトリを作成）', () {
       final file = File(rawFilePath);
@@ -47,6 +57,16 @@ Future<void> main() async {
 
       expect(dataSource.isExist(rawFilename), false);
       expect(dataSource.load(rawFilename), isNull);
+    });
+
+    test('データの削除に成功する（文字列）', () {
+      const data = '{id: \"0\"}';
+      dataSource
+        ..saveWithString(data, rawJsonFilename)
+        ..remove(rawJsonFilename);
+
+      expect(dataSource.isExist(rawJsonFilename), false);
+      expect(dataSource.load(rawJsonFilename), isNull);
     });
 
     test('データの削除に成功する（新しいディレクトリを作成）', () {
