@@ -25,6 +25,7 @@ abstract class LocalStorageDataSource {
     String filename, {
     String dirPath,
   });
+  void removeDir(String dirPath);
   bool isExist(
     String filename, {
     String dirPath,
@@ -79,9 +80,8 @@ class LocalStorageDataSourceImpl implements LocalStorageDataSource {
     String filename, {
     String dirPath,
   }) {
-    final dir = _getDir(dirPath);
-    final file = File('${dir.path}/$filename');
-    return file.existsSync() != null ? file : null;
+    final file = File('${_getDir(dirPath).path}/$filename');
+    return file.existsSync() ? file : null;
   }
 
   @override
@@ -92,9 +92,7 @@ class LocalStorageDataSourceImpl implements LocalStorageDataSource {
   }) {
     final dir = _getDir(dirPath);
     final file = File('${dir.path}/$filename');
-    return file.existsSync() != null
-        ? file.readAsStringSync(encoding: encoding)
-        : null;
+    return file.existsSync() ? file.readAsStringSync(encoding: encoding) : null;
   }
 
   @override
@@ -102,8 +100,18 @@ class LocalStorageDataSourceImpl implements LocalStorageDataSource {
     String filename, {
     String dirPath,
   }) {
-    final dir = _getDir(dirPath);
-    File('${dir.path}/$filename').deleteSync();
+    final file = File('${_getDir(dirPath).path}/$filename');
+    if (file.existsSync()) {
+      file.deleteSync();
+    }
+  }
+
+  @override
+  void removeDir(String dirPath) {
+    final dir = Directory(_getDir(dirPath).path);
+    if (dir.existsSync()) {
+      dir.deleteSync(recursive: true);
+    }
   }
 
   @override

@@ -1,0 +1,2 @@
+# 2番目はテストしたいローカルストレージのフォルダ名
+flutter test test_resource
