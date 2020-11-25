@@ -7,7 +7,7 @@ abstract class LocalStorageDataSource {
     String filename, {
     String dirPath,
   });
-  void saveWithString(
+  void saveString(
     String data,
     String filename, {
     String dirPath,
@@ -16,7 +16,7 @@ abstract class LocalStorageDataSource {
     String filename, {
     String dirPath,
   });
-  String loadWithString(
+  String loadString(
     String filename, {
     String dirPath,
     Encoding encoding = utf8,
@@ -56,7 +56,7 @@ class LocalStorageDataSourceImpl implements LocalStorageDataSource {
   }
 
   @override
-  void saveWithString(
+  void saveString(
     String data,
     String filename, {
     String dirPath,
@@ -85,7 +85,7 @@ class LocalStorageDataSourceImpl implements LocalStorageDataSource {
   }
 
   @override
-  String loadWithString(
+  String loadString(
     String filename, {
     String dirPath,
     Encoding encoding = utf8,

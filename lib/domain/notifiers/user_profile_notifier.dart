@@ -13,9 +13,7 @@ final userProfileNotifierProvider = StateNotifierProvider<UserProfileNotifier>(
     (ref) => UserProfileNotifier(ref.read));
 
 class UserProfileNotifier extends StateNotifier<UserProfile> with LocatorMixin {
-  UserProfileNotifier(this._read) : super(UserProfile()) {
-    Future<void>.delayed(Duration.zero, _configure);
-  }
+  UserProfileNotifier(this._read) : super(UserProfile());
 
   final Reader _read;
 
@@ -29,12 +27,6 @@ class UserProfileNotifier extends StateNotifier<UserProfile> with LocatorMixin {
       _read(firebaseAuthRepositoryProvider);
 
   String get userId => firebaseAuthRepository.loggedInUserId;
-
-  Future<void> _configure() async {
-    if (userId != null) {
-      await loadProfile(userId);
-    }
-  }
 
   Future<void> saveProfile(String id, String name) async {
     final data = state.copyWith(id: id, name: name);

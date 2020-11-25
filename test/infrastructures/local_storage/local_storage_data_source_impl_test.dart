@@ -35,7 +35,7 @@ Future<void> main() async {
 
     test('データの保存と取得に成功する（文字列）', () {
       const data = '{id: \"0\"}';
-      dataSource.saveWithString(data, rawJsonFilename);
+      dataSource.saveString(data, rawJsonFilename);
 
       expect(dataSource.isExist(rawJsonFilename), true);
       expect(dataSource.load(rawJsonFilename), isNotNull);
@@ -62,11 +62,11 @@ Future<void> main() async {
     test('データの削除に成功する（文字列）', () {
       const data = '{id: \"0\"}';
       dataSource
-        ..saveWithString(data, rawJsonFilename)
+        ..saveString(data, rawJsonFilename)
         ..remove(rawJsonFilename);
 
       expect(dataSource.isExist(rawJsonFilename), false);
-      expect(dataSource.loadWithString(rawJsonFilename), isNull);
+      expect(dataSource.loadString(rawJsonFilename), isNull);
     });
 
     test('データの削除に成功する（新しいディレクトリを作成）', () {

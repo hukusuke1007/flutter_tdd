@@ -73,7 +73,7 @@ Future<void> main() async {
       expect(userProfileNotifier.debugState.image, storageFile);
 
       verify(mockUserProfileImageRepo.save(any, any)).called(1);
-      // verifyNever(mockFirebaseAuthRepo.loggedInUserId).called(0); // TODO(shohei): groupでテストすると謎のエラーがでる。単発だと発生しない。
+      verifyNever(mockFirebaseAuthRepo.loggedInUserId).called(0);
       verifyNever(mockUserProfileRepo.load(any)).called(0);
     });
     test('[成功] プロフィールを取得', () async {
@@ -84,7 +84,7 @@ Future<void> main() async {
       expect(userProfileNotifier.debugState.name, name);
 
       verify(mockUserProfileRepo.load(any)).called(1);
-      // verifyNever(mockFirebaseAuthRepo.loggedInUserId).called(0);　// TODO(shohei): groupでテストすると謎のエラーがでる。単発だと発生しない。
+      verifyNever(mockFirebaseAuthRepo.loggedInUserId).called(0);
       verifyNever(mockUserProfileRepo.save(any)).called(0);
     });
   });
